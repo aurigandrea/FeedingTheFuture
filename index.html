@@ -1,0 +1,66 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>>Food Sustainability Top Trumps</title>
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="description" content="">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+  <meta property="og:image:alt" content="">
+
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#fafafa">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Food Sustainability Top Trumps</h1>
+        <div class="game-status" id="gameStatus">Click "New Game" to start!</div>
+        <div class="players-area">
+            <!-- Human Player -->
+            <div class="player-section" id="humanSection">
+                <div class="player-info">
+                    <div class="player-name">You</div>
+                    <div class="player-stats">
+                        Score: <span id="humanScore">0</span> |
+                        Cards: <span id="humanCards">0</span>
+                    </div>
+                </div>
+                <div class="card" id="humanCard">
+                    <div class="hidden-card">Click "New Game" to start</div>
+                </div>
+            </div>
+
+            <!-- Computer Player -->
+            <div class="player-section" id="computerSection">
+                <div class="player-info">
+                    <div class="player-name">Computer</div>
+                    <div class="player-stats">
+                        Score: <span id="computerScore">0</span> |
+                        Cards: <span id="computerCards">0</span>
+                    </div>
+                </div>
+                <div class="card" id="computerCard">
+                    <div class="hidden-card">Computer's card hidden</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button class="button" id="newGameBtn" onclick="startNewGame()">New Game</button>
+            <button class="button" id="nextRoundBtn" onclick="nextRound()" style="display: none;">Next Round</button>
+        </div>
+    </div>
+    <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+
