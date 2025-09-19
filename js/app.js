@@ -1,6 +1,6 @@
 
-// Game state variables
-let humanCards = [];
+// Game state variables 
+let humanCards = []; //Objects in const foodData in data.js
 let computerCards = [];
 let humanScore = 0;
 let computerScore = 0;
@@ -11,6 +11,7 @@ let humanCardInPlay = null;
 let computerCardInPlay = null;
 
 // Helper functions
+// Fisher-Yates to shuffle array of cards
 function shuffleArray(array) {
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -19,7 +20,7 @@ function shuffleArray(array) {
     }
     return shuffled;
 }
-
+//Which card wins
 function isHigherBetter(category) {
     // For environmental metrics, lower is better
     if (['greenhouse', 'water'].includes(category)) {
@@ -29,6 +30,7 @@ function isHigherBetter(category) {
     return true;
 }
 
+//Name mapping for metrics
 function getMetricName(category) {
     const names = {
         greenhouse: 'Greenhouse Gas (kg CO2)',
@@ -38,14 +40,14 @@ function getMetricName(category) {
         protein: 'Protein (g)',
         iron: 'Iron (mg)'
     };
-    return names[category] || category;
+    return names[category];
 }
-
+//Read the card
 function getAvailableMetrics(card) {
     return Object.keys(card.metrics);
 }
 
-// Game initialization and control
+// Start game
 function startNewGame() {
     // Shuffle and deal cards
     const shuffled = shuffleArray(foodData);
