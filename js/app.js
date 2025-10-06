@@ -11,6 +11,11 @@ let humanCardInPlay = null;
 let computerCardInPlay = null;
 const THINK_DELAY = 1500;   // how long the computer "thinks" before picking
 const REVEAL_DELAY = 1500;  // delay between showing cards and announcing winner
+const isWinner = (gamePhase === 'round_end') && (
+  (containerId === 'humanCard' && humanCardInPlay && determineWinner() === 'human') ||
+  (containerId === 'computerCard' && computerCardInPlay && determineWinner() === 'computer')
+);
+
 
 
 // Helper functions
@@ -84,30 +89,32 @@ function startNewGame() {
 
 // Display updates
 function updateDisplay() {
-    // Update scores and card counts
+    // Scores & counts
     document.getElementById('humanScore').textContent = humanScore;
     document.getElementById('computerScore').textContent = computerScore;
     document.getElementById('humanCards').textContent = humanCards.length;
     document.getElementById('computerCards').textContent = computerCards.length;
 
-    // Show active player
+    // Active player highlight
     document.getElementById('humanSection').classList.toggle('active', currentTurn === 'human');
     document.getElementById('computerSection').classList.toggle('active', currentTurn === 'computer');
 
-    // Show human card
+    // Human card
     if (gamePhase === 'playing' && humanCards.length > 0) {
-        showCard(humanCards[0], 'humanCard', true);
-    } else if (gamePhase === 'round_end' && humanCardInPlay) {
+        // interactive only on the human's turn
+        showCard(humanCards[0], 'humanCard', currentTurn === 'human');
+    } else if (humanCardInPlay) {
         showCard(humanCardInPlay, 'humanCard', false);
     }
 
-    // Show computer card
-    if (gamePhase === 'playing') {
-        showHiddenCard('computerCard');
-    } else if (gamePhase === 'round_end' && computerCardInPlay) {
+    // Computer card — keep hidden until it actually has a card to reveal
+    if (computerCardInPlay) {
         showCard(computerCardInPlay, 'computerCard', false);
+    } else {
+        showHiddenCard('computerCard');
     }
 }
+
 
 function showCard(card, containerId, interactive) {
     const container = document.getElementById(containerId);
@@ -167,44 +174,51 @@ function selectCategory(category) {
     if (gamePhase !== 'playing' || currentTurn !== 'human') return;
 
     selectedCategory = category;
-    gamePhase = 'round_end';
 
-    // Play both cards immediately so they "flip" on screen
+    // Step 1: flip only the human card
+    gamePhase = 'reveal_opponent';
     humanCardInPlay = humanCards.shift();
-    computerCardInPlay = computerCards.shift();
+    computerCardInPlay = null; // keep computer hidden
     updateDisplay();
 
-    // Pause before announcing the winner
+    // Step 2: after a beat, flip the computer card
     setTimeout(() => {
-        const winner = determineWinner();
+        computerCardInPlay = computerCards.shift();
+        updateDisplay();
 
-        if (winner === 'human') {
-            humanScore++;
-            updateGameStatus('You won this round!');
-            currentTurn = 'human'; // winner starts next round
-        } else if (winner === 'computer') {
-            computerScore++;
-            updateGameStatus('Computer won this round!');
-            currentTurn = 'computer'; // winner starts next round
-        } else {
-            updateGameStatus('It\'s a tie!');
-            // alternate turns on tie
-            currentTurn = currentTurn === 'human' ? 'computer' : 'human';
-        }
+        // Step 3: after another beat, score & announce
+        setTimeout(() => {
+            const winner = determineWinner();
+            gamePhase = 'round_end';
 
-        // End or continue
-        if (humanCards.length === 0 || computerCards.length === 0) {
-            setTimeout(() => {
-                gamePhase = 'game_over';
-                const finalWinner = humanScore > computerScore ? 'You'
-                                  : computerScore > humanScore ? 'Computer'
-                                  : 'Nobody';
-                updateGameStatus(`Game Over! ${finalWinner} ${finalWinner !== 'Nobody' ? 'won' : 'tied'}!`);
-                document.getElementById('newGameBtn').style.display = 'inline-block';
-            }, REVEAL_DELAY);
-        } else {
-            document.getElementById('nextRoundBtn').style.display = 'inline-block';
-        }
+            if (winner === 'human') {
+                humanScore++;
+                updateGameStatus('You won this round!');
+                currentTurn = 'human';
+            } else if (winner === 'computer') {
+                computerScore++;
+                updateGameStatus('Computer won this round!');
+                currentTurn = 'computer';
+            } else {
+                updateGameStatus('It\'s a tie!');
+                currentTurn = currentTurn === 'human' ? 'computer' : 'human';
+            }
+
+            // End or continue
+            if (humanCards.length === 0 || computerCards.length === 0) {
+                setTimeout(() => {
+                    gamePhase = 'game_over';
+                    const finalWinner = humanScore > computerScore ? 'You'
+                                      : computerScore > humanScore ? 'Computer'
+                                      : 'Nobody';
+                    updateGameStatus(`Game Over! ${finalWinner} ${finalWinner !== 'Nobody' ? 'won' : 'tied'}!`);
+                    document.getElementById('newGameBtn').style.display = 'inline-block';
+                }, REVEAL_DELAY);
+            } else {
+                document.getElementById('nextRoundBtn').style.display = 'inline-block';
+            }
+            updateDisplay();
+        }, REVEAL_DELAY);
     }, REVEAL_DELAY);
 }
 
@@ -249,49 +263,56 @@ function nextRound() {
 function computerTurn() {
     if (computerCards.length === 0) return;
 
-    // Computer "thinks" first (this function should be called AFTER a THINK_DELAY from nextRound)
     const availableMetrics = getAvailableMetrics(computerCards[0]);
     const randomMetric = availableMetrics[Math.floor(Math.random() * availableMetrics.length)];
     selectedCategory = randomMetric;
-    gamePhase = 'round_end';
 
-    // Play both cards immediately so they "flip"
+    // Step 1: flip only the human card (computer keeps its card hidden)
+    gamePhase = 'reveal_opponent';
     humanCardInPlay = humanCards.shift();
-    computerCardInPlay = computerCards.shift();
+    computerCardInPlay = null;
     updateDisplay();
 
-    // Pause before announcing the winner
+    // Step 2: after a beat, flip the computer card
     setTimeout(() => {
-        const winner = determineWinner();
+        computerCardInPlay = computerCards.shift();
+        updateDisplay();
 
-        if (winner === 'human') {
-            humanScore++;
-            updateGameStatus('You won this round!');
-            currentTurn = 'human';
-        } else if (winner === 'computer') {
-            computerScore++;
-            updateGameStatus('Computer won this round!');
-            currentTurn = 'computer';
-        } else {
-            updateGameStatus('It\'s a tie!');
-            currentTurn = 'human';
-        }
+        // Step 3: after another beat, score & announce
+        setTimeout(() => {
+            const winner = determineWinner();
+            gamePhase = 'round_end';
 
-        // End or continue
-        if (humanCards.length === 0 || computerCards.length === 0) {
-            setTimeout(() => {
-                gamePhase = 'game_over';
-                const finalWinner = humanScore > computerScore ? 'You'
-                                  : computerScore > humanScore ? 'Computer'
-                                  : 'Nobody';
-                updateGameStatus(`Game Over! ${finalWinner} ${finalWinner !== 'Nobody' ? 'won' : 'tied'}!`);
-                document.getElementById('newGameBtn').style.display = 'inline-block';
-            }, REVEAL_DELAY);
-        } else {
-            document.getElementById('nextRoundBtn').style.display = 'inline-block';
-        }
+            if (winner === 'human') {
+                humanScore++;
+                updateGameStatus('You won this round!');
+                currentTurn = 'human';
+            } else if (winner === 'computer') {
+                computerScore++;
+                updateGameStatus('Computer won this round!');
+                currentTurn = 'computer';
+            } else {
+                updateGameStatus('It\'s a tie!');
+                currentTurn = 'human';
+            }
+
+            if (humanCards.length === 0 || computerCards.length === 0) {
+                setTimeout(() => {
+                    gamePhase = 'game_over';
+                    const finalWinner = humanScore > computerScore ? 'You'
+                                      : computerScore > humanScore ? 'Computer'
+                                      : 'Nobody';
+                    updateGameStatus(`Game Over! ${finalWinner} ${finalWinner !== 'Nobody' ? 'won' : 'tied'}!`);
+                    document.getElementById('newGameBtn').style.display = 'inline-block';
+                }, REVEAL_DELAY);
+            } else {
+                document.getElementById('nextRoundBtn').style.display = 'inline-block';
+            }
+            updateDisplay();
+        }, REVEAL_DELAY);
     }, REVEAL_DELAY);
 }
+
 
 function updateGameStatus(message) {
     document.getElementById('gameStatus').textContent = message;
