@@ -13,7 +13,8 @@ const foodData = [
         saturated_fats: 2.6,
         protein: 6.6
     }
- 
+    },
+ {
 id: 2,
     name: "Vegetarian Lasagne",
     category: "Meals",
@@ -24,7 +25,8 @@ id: 2,
         saturated_fats: 1.8,
         protein: 4.6
     }
- 
+    },
+ {
 id: 3,
     name: "Chicken Curry",
     category: "Meals",
@@ -35,7 +37,8 @@ id: 3,
         saturated_fats: 1.4,
         protein: 11.5
     }
- 
+    },
+ {
 id: 4,
     name: "Potato Curry",
     category: "Meals",
@@ -46,7 +49,8 @@ id: 4,
         saturated_fats: 0.2,
         protein: 1.4
     }
- 
+    },
+ {
 id: 5,
     name: "Beef Cottage Pie",
     category: "Meals",
@@ -57,7 +61,8 @@ id: 5,
         saturated_fats: 2.1,
         protein: 7.1
     }
- 
+    },
+ {
 id: 6,
     name: "Vegetarian Cottage Pie",
     category: "Meals",
@@ -68,7 +73,8 @@ id: 6,
         saturated_fats: 0.9,
         protein: 2.5
     }
- 
+    },
+ {
 id: 7,
     name: "Fish Fingers",
     category: "Meals",
@@ -79,7 +85,8 @@ id: 7,
         saturated_fats: 1.2,
         protein: 14.3
     }
- 
+    },
+ {
 id: 8,
     name: "Quiche Lorraine",
     category: "Meals",
@@ -90,7 +97,8 @@ id: 8,
         saturated_fats: 9.1,
         protein: 9.7
     }
- 
+    },
+ {
 id: 9,
     name: "Cheese & Onion Quiche",
     category: "Meals",
@@ -101,7 +109,8 @@ id: 9,
         saturated_fats: 4.5,
         protein: 7.1
     }
- 
+    },
+ {
 id: 10,
     name: "Pepperoni Pizza",
     category: "Meals",
@@ -112,7 +121,8 @@ id: 10,
         saturated_fats: 3.9,
         protein: 11.5
     }
- 
+    },
+ {
 id: 11,
     name: "Vegetarian Pizza",
     category: "Meals",
@@ -123,7 +133,8 @@ id: 11,
         saturated_fats: 3.0,
         protein: 8.5
     }
- 
+    },
+ {}
 id: 12,
     name: "Pasta with Chicken",
     category: "Meals",
@@ -134,7 +145,8 @@ id: 12,
         saturated_fats: 0.3,
         protein: 8.2
     }
- 
+    },
+ {
 id: 13,
     name: "Vegetarian Pasta",
     category: "Meals",
@@ -145,7 +157,8 @@ id: 13,
         saturated_fats: 0.2,
         protein: 2.9
     }
- 
+    },
+ {
 id: 14,
     name: "Roast Beef Dinner",
     category: "Meals",
@@ -156,7 +169,8 @@ id: 14,
         saturated_fats: 0.5,
         protein: 6.8
     }
- 
+    },
+ {
 id: 15,
     name: "Salmon Sushi",
     category: "Meals",
@@ -167,7 +181,8 @@ id: 15,
         saturated_fats: 1.1,
         protein: 8.7
     }
- 
+},
+ {
 id: 16,
     name: "Vegetarian Sushi",
     category: "Meals",
@@ -178,5 +193,5 @@ id: 16,
         saturated_fats: 0.4,
         protein: 3.4
     }
-    }
+}
 ];
