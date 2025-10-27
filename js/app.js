@@ -31,7 +31,7 @@ function shuffleArray(array) {
 //Which card wins
 function isHigherBetter(category) {
     // For environmental metrics, lower is better
-    if (['greenhouse', 'water'].includes(category)) {
+    if (['greenhouse', 'water', 'saturated_fats'].includes(category)) {
         return false;
     }
     // For nutrition metrics, higher is better
@@ -46,7 +46,8 @@ function getMetricName(category) {
         fiber: 'Fiber (g)',
         vitaminC: 'Vitamin C (mg)',
         protein: 'Protein (g)',
-        iron: 'Iron (mg)'
+        iron: 'Iron (mg)',
+        saturated_fats: 'Saturated Fats (g)'
     };
     return names[category];
 }
