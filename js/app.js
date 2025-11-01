@@ -81,6 +81,14 @@ function startNewGame() {
     humanCardInPlay = null;
     computerCardInPlay = null;
 
+    // Flip animation for both player sections
+    document.getElementById('humanSection').classList.add('flipped');
+    document.getElementById('computerSection').classList.add('flipped');
+    setTimeout(() => {
+        document.getElementById('humanSection').classList.remove('flipped');
+        document.getElementById('computerSection').classList.remove('flipped');
+    }, 600);
+
     updateDisplay();
     updateGameStatus('Your turn - select a category');
 
@@ -148,7 +156,7 @@ function showCard(card, containerId, interactive) {
                 }
 
                 return `
-                    <div class="${className}" ${interactive ? `onclick="selectCategory('${metric}')"` : ''}>
+                    <div class="${className}" ${interactive ? `onclick=\"selectCategory('${metric}')\"` : ''}>
                         <span>${getMetricName(metric)}</span>
                         <span>${higher ? '↑' : '↓'} ${value}</span>
                     </div>
@@ -241,24 +249,32 @@ function determineWinner() {
 }
 
 function nextRound() {
-    selectedCategory = null;
-    humanCardInPlay = null;
-    computerCardInPlay = null;
-    gamePhase = 'playing';
+    // Flip animation for both player sections
+    document.getElementById('humanSection').classList.add('flipped');
+    document.getElementById('computerSection').classList.add('flipped');
+    setTimeout(() => {
+        document.getElementById('humanSection').classList.remove('flipped');
+        document.getElementById('computerSection').classList.remove('flipped');
 
-    document.getElementById('nextRoundBtn').style.display = 'none';
+        selectedCategory = null;
+        humanCardInPlay = null;
+        computerCardInPlay = null;
+        gamePhase = 'playing';
 
-    if (currentTurn === 'computer') {
-        // Computer's turn
-        updateGameStatus('Computer is thinking...');
-        setTimeout(() => {
-            computerTurn();
-        }, 1500);
-    } else {
-        updateGameStatus('Your turn - select a category');
-    }
+        document.getElementById('nextRoundBtn').style.display = 'none';
 
-    updateDisplay();
+        if (currentTurn === 'computer') {
+            // Computer's turn
+            updateGameStatus('Computer is thinking...');
+            setTimeout(() => {
+                computerTurn();
+            }, 1500);
+        } else {
+            updateGameStatus('Your turn - select a category');
+        }
+
+        updateDisplay();
+    }, 600);
 }
 
 function computerTurn() {
