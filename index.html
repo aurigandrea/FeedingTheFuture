@@ -20,9 +20,24 @@
   <link rel="manifest" href="site.webmanifest">
   <meta name="theme-color" content="#fafafa">
 </head>
+<header>
+        <div class="header-content">
+        <div class="site-title"><a href="index.html">Feeding the Future</a></div>
+        <nav class="desktop-nav">
+            <a href="index.html">Home</a>
+            <a href="About.html">About</a>
+        </nav>
+        <div class="mobile-menu">
+            <button class="hamburger" id="hamburger">&#9776;</button>
+            <nav class="mobile-nav" id="mobile-nav">
+                <a href="index.html">Home</a>
+                <a href="About.html">About</a>
+            </nav>
+        </div>
+    </div>
+</header>
 <body>
     <div class="game-container">
-        <h1>Feeding the Future</h1>
         <h2>Food Sustainability Face-Off</h2>
         <div class="game-status" id="gameStatus">Click "New Game" to start!</div>
         <div class="button-container">
@@ -61,6 +76,14 @@
 
     
     </div>
+    <footer>
+  <div class="footer-content">
+© 2025 University of Edinburgh & contributors. TRAnsforming the DEbate about Livestock Systems Transformation (TRADE) project.   
+Digital version developed by Dr Andrea Kocsis (Institute for Design Informatics).
+Funded by UKRI (BB/W018152/1, ES/P000681/1).
+<a href="https://github.com/aurigandrea/FeedingTheFuture">Code available under MIT Licence.</a>
+  </div>
+</footer>
     <script src="js/data.js"></script>
   <script src="js/app.js"></script>
 </body>

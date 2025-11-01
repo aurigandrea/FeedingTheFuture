@@ -321,3 +321,27 @@ function updateGameStatus(message) {
 
 // Initialize the game when the page loads
 updateDisplay();
+
+ // Toggle mobile navigation
+    // Ensure the elements exist before attaching listeners 
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+
+    if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', function(event) {
+            // prevent the window click handler from immediately hiding the menu
+            event.stopPropagation();
+            if (mobileNav.style.display === 'flex') {
+                mobileNav.style.display = 'none';
+            } else {
+                mobileNav.style.display = 'flex';
+            }
+        });
+
+        // Hide mobile nav when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target !== mobileNav && event.target !== hamburger) {
+                mobileNav.style.display = 'none';
+            }
+        });
+    }
