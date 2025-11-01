@@ -5,3 +5,7 @@ node_modules
 dist
 .cache
 .DS_Store
+
+# Editor folders
+.idea/
+.vscode/
