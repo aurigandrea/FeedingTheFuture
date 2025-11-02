@@ -15,7 +15,9 @@
 
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" href="favicon-16x16.png" sizes="16x16">
+
 
   <link rel="manifest" href="site.webmanifest">
   <meta name="theme-color" content="#fafafa">
@@ -39,7 +41,9 @@
 <body>
     <div class="game-container">
         <h2>Food Sustainability Face-Off</h2>
-        <div class="game-status" id="gameStatus">Click "New Game" to start!</div>
+        <div class="game-status" id="gameStatus"><p>Guess which meal is better for the planet!<br>
+When it’s your turn, pick a category to challenge your opponent.<br>
+The arrows show whether a higher or lower value wins.<br>Click "New Game" to start!</p></div>
         <div class="button-container">
             <button class="button" id="newGameBtn" onclick="startNewGame()">New Game</button>
             <button class="button" id="nextRoundBtn" onclick="nextRound()" style="display: none;">Next Round</button>
